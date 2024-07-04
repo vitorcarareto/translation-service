@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding-top: 70px;
+      }
+      .container {
+        max-width: 600px;
+      }
+      .translate-button {
+        width: 100%;
+      }
+      .navbar {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      #progress-container {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <a href="#" class="navbar-navbar">Translation service app...</a>
+    </nav>
+    <div class="container">
+      <h1 class="text-center mt-4">Translation Service</h1>
+      <form id="translationForm">
+        <div class="form-group">
+          <label for="textoToTranslate()">Texto to translate</label>
+          <textarea name="textoToTranslate" id="textoToTranslate" class="form-control" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="languages">Languages</label>
+          <input
+            type="text"
+            name="languages"
+            id="languages"
+            class="form-control"
+            placeholder="pt,en"
+            value="pt,en (comma-separated)"
+          />
+        </div>
+
+        <button class="btn btn-primary translate-button" onclick="submitTranslation()">Translate</button>
+      </form>
+
+      <div class="mt-4" id="results" style="display: none">
+        <h3>Translation results</h3>
+        <pre id="translationResults"></pre>
+      </div>
+
+      <div class="mt-4" id="progress-container">
+        <h4 id="progress-container">Translation in progress...</h4>
+        <div class="progress">
+          <div
+            id="progress-bar"
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label for="search-id">Check Translation by ID</label>
+        <input type="number" id="search-id" class="form-control" placeholder="Enter Translation ID" />
+        <button id="search-button" class="btn btn-info mt-2" onclick="checkTranslationStatus()">Check Status</button>
+        <button id="content-button" class="btn btn-secondary mt-2" onclick="checkTranslationContent()">
+          Check Content
+        </button>
+      </div>
+
+      <div class="mt-4" id="status-container" style="display: none">
+        <h4>Translation status</h4>
+        <pre id="status-result"></pre>
+      </div>
+      <div class="mt-4" id="content-container" style="display: none">
+        <h4>Translation content</h4>
+        <pre id="content-result"></pre>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+      integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11/dist/umd/popper.min.js"
+      integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/axios@1.7/dist/axios.min.js"
+      integrity="sha256-itEcTLB5u6kxVnJycPUQKS7tzAcWxvIXJQdKWeyLm5Y="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      async function submitTranslation() {
+        const text = document.getElementById("textoToTranslate").value;
+        const languages = document
+          .getElementById("languages")
+          .value.split(",")
+          .map((lang) => lang.trim());
+        if (!text || languages.length < 2) {
+          alert("Please provide both text and languages.");
+          return;
+        }
+        const progressBar = document.getElementById("progress-bar");
+        const progressText = document.getElementById("progress-text");
+        progressBar.classList.remove("bg-success");
+        progressBar.classList.add("bg-primary");
+        progressBar.style.width = "0%";
+        progressText.textContent = "Translating...";
+    </script>
+  </body>
+</html>
